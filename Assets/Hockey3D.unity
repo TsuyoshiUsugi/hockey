@@ -1531,7 +1531,7 @@ GameObject:
   - component: {fileID: 1762346070}
   - component: {fileID: 1762346069}
   - component: {fileID: 1762346072}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spliter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
