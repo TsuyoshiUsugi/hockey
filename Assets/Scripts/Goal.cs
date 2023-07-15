@@ -14,9 +14,9 @@ namespace TsuyoshiLibrary
             _manager = FindObjectOfType<Manager>();
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnCollisionEnter(Collision collision)
         {
-            other.TryGetComponent(out Hockey hockey);
+            collision.gameObject.TryGetComponent(out Hockey hockey);
 
             if (hockey)
             {

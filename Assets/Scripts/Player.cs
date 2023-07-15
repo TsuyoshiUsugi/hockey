@@ -23,6 +23,8 @@ namespace TsuyoshiLibrary
         {
             _h = Input.GetAxisRaw(_hInput);
             _v = Input.GetAxisRaw(_vInput);
+
+            
         }
 
         private void FixedUpdate()
