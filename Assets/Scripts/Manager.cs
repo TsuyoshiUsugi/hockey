@@ -46,6 +46,7 @@ namespace TsuyoshiLibrary
         }
 
         /// <summary>
+        /// スコアを0にする
         /// packが0になるまで生成したpackを消す
         /// 元から一つあるpackはリストに入っていないので必ず一つ残る
         /// </summary>
@@ -54,10 +55,7 @@ namespace TsuyoshiLibrary
             _p1Score = 0; 
             _p2Score = 0 ;
 
-            while (_packs.Count > 0)
-            {
-                DestroyPack();
-            }
+            while (_packs.Count > 0)　DestroyPack();
             _pack.transform.position = Vector3.zero;
         }
 
