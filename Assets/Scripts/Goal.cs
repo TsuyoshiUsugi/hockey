@@ -6,7 +6,7 @@ namespace TsuyoshiLibrary
 {
     public class Goal : MonoBehaviour
     {
-        [SerializeField, Tooltip("スコアを追加する方を指定")] AddPointPlayer _player;
+        [SerializeField, Tooltip("スコアを追加する方を指定")] OwnerPlayer _player;
         Manager _manager;
 
         private void Start()
@@ -26,9 +26,9 @@ namespace TsuyoshiLibrary
     }
 
     /// <summary>
-    /// スコアを追加する方を指定する為のenum
+    /// どちらのplayerか指定する為のenum
     /// </summary>
-    public enum AddPointPlayer
+    public enum OwnerPlayer
     {
         Player1,
         Player2,

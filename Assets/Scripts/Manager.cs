@@ -17,9 +17,9 @@ namespace TsuyoshiLibrary
             SetScoreText();
         }
 
-        public void AddScore(AddPointPlayer addPointPlayer)
+        public void AddScore(OwnerPlayer addPointPlayer)
         {
-            if (addPointPlayer == AddPointPlayer.Player1)
+            if (addPointPlayer == OwnerPlayer.Player1)
             {
                 _p1Score++;
             }

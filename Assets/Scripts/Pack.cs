@@ -15,36 +15,27 @@ namespace TsuyoshiLibrary
             TryGetComponent(out _rb);
         }
 
-        private void FixedUpdate()
-        {
-            _rb.velocity = _dir * _speed;
-        }
-
-        void CalculateDir(Vector3 hitObj)
-        {
-            _dir = (transform.position - hitObj);
-        }
-
         private void OnCollisionEnter(Collision collision)
         {
-
             if (collision.gameObject.GetComponent<Goal>())
             {
                 transform.position = Vector3.zero;
                 _dir = Vector3.zero;
 
             }
-            else if (collision.gameObject.GetComponent<Player>())
+            else if (collision.gameObject.GetComponent<Player>() || collision.gameObject.GetComponent<Pack>())
             {
-                CalculateDir(collision.gameObject.transform.position);
+                _dir = (transform.position - collision.gameObject.transform.position).normalized;
+                _rb.velocity = _dir * _speed;
             }
             else
             {
-                var inDirection = _rb.velocity;
+                var inDirection = _dir;
                 var inNormal = collision.contacts[0].normal;
                 float dot = Vector3.Dot(inDirection, inNormal);
                 Vector3 reflection = inDirection - 2f * dot * inNormal;
                 _dir = reflection.normalized;
+                _rb.velocity = _dir * _speed;
 
                 Debug.Log($"入射ベクトル：{inDirection}法線ベクトル:{inNormal}反射ベクトル：{reflection}");
             }
