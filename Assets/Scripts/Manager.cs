@@ -73,7 +73,7 @@ namespace TsuyoshiLibrary
         /// </summary>
         public void GeneratePack()
         {
-            var randomPos = Random.Range(_fieldInfo.Down.transform.position.x + _offset, _fieldInfo.Top.transform.position.x - _offset);
+            var randomPos = Random.Range(_fieldInfo.Down.transform.position.z + _offset, _fieldInfo.Top.transform.position.z - _offset);
             var pack = Instantiate(_pack, new Vector3(0, 0, randomPos),
                 Quaternion.identity);
             Debug.Log(randomPos);
