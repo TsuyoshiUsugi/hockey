@@ -7,29 +7,11 @@ namespace TsuyoshiLibrary
 {
     public class Player : MonoBehaviour
     {
-        [SerializeField] float _speed = 10;
-        [SerializeField] string _hInput = "Horizontal";
-        [SerializeField] string _vInput = "Vertical";
-        float _h;
-        float _v;
-        Rigidbody _rigidbody;
+        [SerializeField] float _speed = 0.1f;
 
-        private void Start()
+        public void SetPos(float v, float h)
         {
-            TryGetComponent(out _rigidbody);
-        }
-
-        private void Update()
-        {
-            _h = Input.GetAxisRaw(_hInput);
-            _v = Input.GetAxisRaw(_vInput);
-
-            
-        }
-
-        private void FixedUpdate()
-        {
-            _rigidbody.AddForce(new Vector3(_h, 0, _v) * _speed);
+            this.transform.position += new Vector3(h, 0, v) * _speed;
         }
     }
 }
