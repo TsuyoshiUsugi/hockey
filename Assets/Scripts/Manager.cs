@@ -17,6 +17,11 @@ namespace TsuyoshiLibrary
             {
                 ResetScore();
             }
+            
+            if (Input.GetKeyDown(KeyCode.I)) 
+            {
+                
+            }
 
             SetScore();
         }

@@ -18,16 +18,18 @@ namespace TsuyoshiLibrary
 
         private void Update()
         {
+            CalculateDir();
+            
         }
 
         private void FixedUpdate()
         {
-            CalculateDir();
             _rb.velocity = _dir * _speed;
         }
 
         private void CalculateDir()
         {
+            if (transform.position == _previousPos) return;
             _dir = (transform.position - _previousPos).normalized;
             _previousPos = transform.position;
         }
@@ -45,11 +47,14 @@ namespace TsuyoshiLibrary
             {
                 // 入射ベクトル（速度）
                 var inDirection = _rb.velocity;
+                
                 // 法線ベクトル
                 var inNormal = collision.contacts[0].normal;
-                // 反射ベクトル（速度）
-                var result = Vector3.Reflect(inDirection, inNormal);
-                _dir = result.normalized;
+                float dot = Vector3.Dot(inDirection, inNormal);
+                Vector3 reflection = inDirection - 2f * dot * inNormal;
+                _dir = reflection.normalized;
+
+                Debug.Log($"入射ベクトル：{inDirection}法線ベクトル:{inNormal}反射ベクトル：{reflection}");
             }
         }
     }
