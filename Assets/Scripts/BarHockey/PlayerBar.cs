@@ -12,10 +12,32 @@ namespace TsuyoshiLibrary
         [SerializeField] GameObject _mallet1;
         [SerializeField] GameObject _mallet2;
         [SerializeField] GameObject _bar;
+        [SerializeField] float _speed = 10;
+        [SerializeField] OwnerPlayer _player;
 
         private void Update()
         {
             SetBar();
+        }
+
+        /// <summary>
+        /// 一つ目のマレットの位置を移動する
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="h"></param>
+        public void MoveMalletPosOne(float v, float h)
+        {
+            _mallet1.transform.localPosition += new Vector3(v, 0, h) * _speed * Time.deltaTime;
+        }
+        
+        /// <summary>
+        /// 二つ目のマレットの位置を移動する
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="h"></param>
+        public void MoveMalletPosTwo(float v, float h)
+        {
+            _mallet2.transform.localPosition += new Vector3(v, 0, h) * _speed * Time.deltaTime;
         }
 
         /// <summary>

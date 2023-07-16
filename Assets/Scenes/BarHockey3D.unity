@@ -899,6 +899,8 @@ MonoBehaviour:
   _mallet1: {fileID: 1994740139}
   _mallet2: {fileID: 1419653720}
   _bar: {fileID: 422764344}
+  _speed: 10
+  _player: 0
 --- !u!1 &861026985 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 577593654812731354, guid: 21ccf737f79230b4893ecbd0b4954d6e, type: 3}
@@ -1545,8 +1547,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c30c376a2157ce4438f8e41a169d240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _p1LeftStickInputName: 
-  _p1RightStickInputName: 
+  _p1LeftStickVerticalInputName: Joystick1LeftVertical
+  _p1LeftStickHorizontalInputName: Joystick1LeftHorizontal
+  _p1RightStickVerticalInputName: Joystick1RightVertical
+  _p1RightStickHorizontalInputName: Joystick1RightHorizontal
+  _player1Bar: {fileID: 744401083}
+  _player2Bar: {fileID: 0}
 --- !u!1 &1762346068
 GameObject:
   m_ObjectHideFlags: 0
