@@ -22,9 +22,24 @@ namespace TsuyoshiLibrary
             _dir = GetRandomDirection();
         }
 
+        private void Update()
+        {
+            ShowReflectionPredictionPoint();
+        }
+
         private void FixedUpdate()
         {
             _rb.velocity = _dir * _speed;
+        }
+
+        /// <summary>
+        /// 進行方向にRayを放ち、ぶつかった地点にボールを出す
+        /// </summary>
+        void ShowReflectionPredictionPoint()
+        {
+            var ray = new Ray(this.transform.position, _dir);
+            Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue);
+            Physics.Raycast(ray, out RaycastHit hit);
         }
 
         private void OnCollisionEnter(Collision collision)
