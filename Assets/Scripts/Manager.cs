@@ -16,6 +16,14 @@ namespace TsuyoshiLibrary
         [SerializeField] Text _packNumText = null;
         [SerializeField] GameObject _pack;
         List<GameObject> _packs = new List<GameObject>();
+        FieldInfo _fieldInfo;
+        float _offset = 1;
+
+        private void Start()
+        {
+            _fieldInfo = FindAnyObjectByType<FieldInfo>();
+            _offset = _pack.transform.localScale.x;
+        }
 
         private void Update()
         {
@@ -65,7 +73,10 @@ namespace TsuyoshiLibrary
         /// </summary>
         public void GeneratePack()
         {
-            var pack = Instantiate(_pack);
+            var randomPos = Random.Range(_fieldInfo.Down.transform.position.x + _offset, _fieldInfo.Top.transform.position.x - _offset);
+            var pack = Instantiate(_pack, new Vector3(0, 0, randomPos),
+                Quaternion.identity);
+            Debug.Log(randomPos);
             _packs.Add(pack);
         }
 

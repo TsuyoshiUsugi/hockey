@@ -15,17 +15,13 @@ namespace TsuyoshiLibrary
         /// <summary>どちらのplayerのscriptか</summary>
         [SerializeField] OwnerPlayer _player;
         [SerializeField] float _speed = 0.1f;
-
-        //上下左右のカベ。移動可能範囲を取るため使用
-        [SerializeField] GameObject _split;
-        [SerializeField] GameObject _top;
-        [SerializeField] GameObject _down;
-        [SerializeField] GameObject _goal;
+        FieldInfo _field;
 
         float _offset = 1;  //player(マレット)のサイズ
 
         private void Start()
         {
+            _field = FindObjectOfType<FieldInfo>();
             _offset = transform.localScale.x;
         }
 
@@ -41,17 +37,17 @@ namespace TsuyoshiLibrary
         {
             if (_player == OwnerPlayer.Player1)
             {
-                float clampedX = Mathf.Clamp(transform.position.x, _goal.transform.position.x + _offset, _split.transform.position.x - _offset);
+                float clampedX = Mathf.Clamp(transform.position.x, _field.LeftGoal.transform.position.x + _offset, _field.Split.transform.position.x - _offset);
                 transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
 
             }
             else
             {
-                float clampedX = Mathf.Clamp(transform.position.x, _split.transform.position.x + _offset, _goal.transform.position.x - _offset);
+                float clampedX = Mathf.Clamp(transform.position.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
                 transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
             }
 
-            float clampedZ = Mathf.Clamp(transform.position.z, _down.transform.position.z + _offset, _top.transform.position.z - _offset);
+            float clampedZ = Mathf.Clamp(transform.position.z, _field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
             transform.position = new Vector3(transform.position.x, transform.position.y, clampedZ);
         }
 
@@ -62,7 +58,7 @@ namespace TsuyoshiLibrary
         /// <param name="h"></param>
         public void MovePos(float v, float h)
         {
-            this.transform.position += new Vector3(h, 0, v) * _speed;
+            this.transform.position += new Vector3(h, 0, v) * _speed * Time.deltaTime;
         }
 
         /// <summary>

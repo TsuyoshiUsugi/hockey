@@ -25,10 +25,12 @@ namespace TsuyoshiLibrary
         float _v2;
 
         Manager _manager;
+        FieldInfo _fieldInfo;
 
         private void Start()
         {
             _manager = FindObjectOfType<Manager>();
+            _fieldInfo  = FindAnyObjectByType<FieldInfo>();
         }
 
         private void Update()

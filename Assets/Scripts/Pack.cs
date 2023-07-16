@@ -31,7 +31,7 @@ namespace TsuyoshiLibrary
             if (collision.gameObject.GetComponent<Goal>())  //ゴールに着いたら中心へ瞬間移動
             {
                 transform.position = Vector3.zero;
-                _dir = Vector3.zero;
+                //_dir = Vector3.zero;
 
             }
             else if (collision.gameObject.GetComponent<Player>() || collision.gameObject.GetComponent<Pack>())  //playerとpackにあたったら中心点の差分を進行方向に
