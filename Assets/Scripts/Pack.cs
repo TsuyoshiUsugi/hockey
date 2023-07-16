@@ -19,6 +19,7 @@ namespace TsuyoshiLibrary
         private void Start()
         {
             TryGetComponent(out _rb);
+            _dir = GetRandomDirection();
         }
 
         private void FixedUpdate()
@@ -31,8 +32,7 @@ namespace TsuyoshiLibrary
             if (collision.gameObject.GetComponent<Goal>())  //ゴールに着いたら中心へ瞬間移動
             {
                 transform.position = Vector3.zero;
-                //_dir = Vector3.zero;
-
+                _dir = GetRandomDirection();
             }
             else if (collision.gameObject.GetComponent<Player>() || collision.gameObject.GetComponent<Pack>())  //playerとpackにあたったら中心点の差分を進行方向に
             {
@@ -48,6 +48,18 @@ namespace TsuyoshiLibrary
                 _dir = reflection.normalized;
                 _rb.velocity = _dir * _speed;
             }
+        }
+
+        /// <summary>
+        /// 360度からランダムな方向を返す
+        /// </summary>
+        /// <returns></returns>
+        public Vector3 GetRandomDirection()
+        {
+            float randomAngle = Random.Range(0f, 360f);
+            Vector3 randomDirection = Quaternion.Euler(0f, randomAngle, 0f) * Vector3.forward;
+
+            return randomDirection;
         }
     }
 }

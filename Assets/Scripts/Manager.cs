@@ -55,28 +55,31 @@ namespace TsuyoshiLibrary
 
         /// <summary>
         /// スコアを0にする
-        /// packが0になるまで生成したpackを消す
-        /// 元から一つあるpackはリストに入っていないので必ず一つ残る
         /// </summary>
-        public void Reset() 
+        public void ResetScore() 
         {
             _p1Score = 0; 
             _p2Score = 0 ;
+        }
 
-            while (_packs.Count > 0)　DestroyPack();
+        /// <summary>
+        /// packが0になるまで生成したpackを消す
+        /// 元から一つあるpackはリストに入っていないので必ず一つ残る
+        /// </summary>
+        public void ResetPack()
+        {
+            while (_packs.Count > 0) DestroyPack();
             _pack.transform.position = Vector3.zero;
         }
 
         /// <summary>
-        /// packを生成する
+        /// packを真ん中のライン上に生成する
         /// あとで消すときの為にリストに入れる
         /// </summary>
         public void GeneratePack()
         {
             var randomPos = Random.Range(_fieldInfo.Down.transform.position.z + _offset, _fieldInfo.Top.transform.position.z - _offset);
-            var pack = Instantiate(_pack, new Vector3(0, 0, randomPos),
-                Quaternion.identity);
-            Debug.Log(randomPos);
+            var pack = Instantiate(_pack, new Vector3(0, 0, randomPos), Quaternion.identity);
             _packs.Add(pack);
         }
 

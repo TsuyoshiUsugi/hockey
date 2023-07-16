@@ -39,7 +39,6 @@ namespace TsuyoshiLibrary
             {
                 float clampedX = Mathf.Clamp(transform.position.x, _field.LeftGoal.transform.position.x + _offset, _field.Split.transform.position.x - _offset);
                 transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
-
             }
             else
             {

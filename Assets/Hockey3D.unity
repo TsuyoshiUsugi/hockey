@@ -551,7 +551,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "U\u3067\u30B9\u30B3\u30A2\u30FB\u30D1\u30C3\u30AF\u6570\u30EA\u30BB\u30C3\u30C8\nI\u3067\u30D1\u30C3\u30AF\u6570\u2191\nO\u3067\u30D1\u30C3\u30AF\u6570\u2193"
+  m_Text: "Y\u3067\u30D1\u30C3\u30AF\u6570\u30EA\u30BB\u30C3\u30C8\nU\u3067\u30B9\u30B3\u30A2\u30EA\u30BB\u30C3\u30C8\nI\u3067\u30D1\u30C3\u30AF\u6570\u2191\nO\u3067\u30D1\u30C3\u30AF\u6570\u2193"
 --- !u!222 &406339239
 CanvasRenderer:
   m_ObjectHideFlags: 0

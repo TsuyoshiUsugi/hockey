@@ -25,12 +25,12 @@ namespace TsuyoshiLibrary
         float _v2;
 
         Manager _manager;
-        FieldInfo _fieldInfo;
+        
 
         private void Start()
         {
             _manager = FindObjectOfType<Manager>();
-            _fieldInfo  = FindAnyObjectByType<FieldInfo>();
+           
         }
 
         private void Update()
@@ -45,7 +45,8 @@ namespace TsuyoshiLibrary
         /// </summary>
         private void GetSettingInput()
         {
-            if (Input.GetKeyDown(KeyCode.U))　_manager.Reset();
+            if (Input.GetKeyDown(KeyCode.U))　_manager.ResetScore();
+            if (Input.GetKeyDown(KeyCode.Y))　_manager.ResetPack();
             if (Input.GetKeyDown(KeyCode.I)) _manager.GeneratePack();
             if (Input.GetKeyDown(KeyCode.O))　_manager.DestroyPack();
         }
