@@ -28,11 +28,11 @@ namespace TsuyoshiLibrary
         {
             _h1 = Input.GetAxis(_p1HInputName);
             _v1 = Input.GetAxis(_p1VInputName);
-            _player1.SetPos(_v1, _h1);
+            _player1.MovePos(_v1, _h1);
             
             _h2 = Input.GetAxis(_p2HInputName);
             _v2 = Input.GetAxis(_p2VInputName);
-            _player2.SetPos(_v2, _h2);
+            _player2.MovePos(_v2, _h2);
 
             if (Input.GetKeyDown(KeyCode.U))
             {
