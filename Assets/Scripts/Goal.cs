@@ -16,7 +16,7 @@ namespace TsuyoshiLibrary
 
         private void OnCollisionEnter(Collision collision)
         {
-            collision.gameObject.TryGetComponent(out Hockey hockey);
+            collision.gameObject.TryGetComponent(out Pack hockey);
 
             if (hockey)
             {

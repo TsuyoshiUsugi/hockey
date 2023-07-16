@@ -411,7 +411,7 @@ GameObject:
   - component: {fileID: 406339239}
   - component: {fileID: 406339238}
   m_Layer: 5
-  m_Name: Text (Legacy) (2)
+  m_Name: Help
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 456255647}
   - component: {fileID: 456255646}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -670,8 +670,8 @@ GameObject:
   - component: {fileID: 861026988}
   - component: {fileID: 861026986}
   - component: {fileID: 861026992}
-  m_Layer: 0
-  m_Name: Hockey
+  m_Layer: 7
+  m_Name: pack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -685,10 +685,10 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861026985}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.0000001
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
@@ -700,7 +700,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861026985}
-  m_Material: {fileID: 13400000, guid: cab44894d5f92f748b8cc9d85f51c96a, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5000001
@@ -784,6 +784,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7b572a3cbab0a4e9b1b0c28edde070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 10
+  _dir: {x: 0, y: 0, z: 0}
 --- !u!1 &873338404
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,7 +834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1031,7 +1033,7 @@ GameObject:
   - component: {fileID: 974261420}
   - component: {fileID: 974261419}
   m_Layer: 5
-  m_Name: Text (Legacy) (1)
+  m_Name: Help2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1404,7 +1406,7 @@ GameObject:
   - component: {fileID: 1630731460}
   - component: {fileID: 1630731459}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Help1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1612,7 +1614,7 @@ BoxCollider:
   m_GameObject: {fileID: 1762346068}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 1, z: 1.0000001}
   m_Center: {x: 0, y: 0, z: 0}
