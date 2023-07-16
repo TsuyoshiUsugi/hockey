@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace TsuyoshiLibrary
 {
+    /// <summary>
+    /// ゴールのscript
+    /// packが当たると設定したプレイヤーのスコアを増やすマネージャーの関数を呼び出す
+    /// </summary>
     public class Goal : MonoBehaviour
     {
         [SerializeField, Tooltip("スコアを追加する方を指定")] OwnerPlayer _player;

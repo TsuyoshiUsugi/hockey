@@ -5,18 +5,28 @@ using UnityEngine.UI;
 
 namespace TsuyoshiLibrary
 {
+    /// <summary>
+    /// スコアとUIと設定を管理する
+    /// </summary>
     public class Manager : MonoBehaviour
     {
         [SerializeField] int _p1Score = 0;
         [SerializeField] int _p2Score = 0;
         [SerializeField] Text _scoreText = null;
+        [SerializeField] Text _packNumText = null;
         [SerializeField] GameObject _pack;
+        List<GameObject> _packs = new List<GameObject>();
 
         private void Update()
         {
-            SetScoreText();
+            SetText();
         }
 
+        /// <summary>
+        /// スコアを呼び出す処理
+        /// ゴールから呼び出す
+        /// </summary>
+        /// <param name="addPointPlayer"></param>
         public void AddScore(OwnerPlayer addPointPlayer)
         {
             if (addPointPlayer == OwnerPlayer.Player1)
@@ -29,20 +39,46 @@ namespace TsuyoshiLibrary
             }
         }
 
-        private void SetScoreText()
+        private void SetText()
         {
             _scoreText.text = $"{_p1Score}:{_p2Score}";
+            _packNumText.text = $"パック数：{_packs.Count + 1}";     //元から一つあるので+1
         }
 
-        public void ResetScore() 
+        /// <summary>
+        /// packが0になるまで生成したpackを消す
+        /// 元から一つあるpackはリストに入っていないので必ず一つ残る
+        /// </summary>
+        public void Reset() 
         {
             _p1Score = 0; 
             _p2Score = 0 ;
+
+            while (_packs.Count > 0)
+            {
+                DestroyPack();
+            }
+            _pack.transform.position = Vector3.zero;
         }
 
+        /// <summary>
+        /// packを生成する
+        /// あとで消すときの為にリストに入れる
+        /// </summary>
         public void GeneratePack()
         {
-            Instantiate(_pack);
+            var pack = Instantiate(_pack);
+            _packs.Add(pack);
+        }
+
+        /// <summary>
+        /// packの破壊処理
+        /// </summary>
+        public void DestroyPack()
+        {
+            if (_packs.Count == 0) return;
+            Destroy(_packs[0]);
+            _packs.RemoveAt(0);
         }
     }
 }

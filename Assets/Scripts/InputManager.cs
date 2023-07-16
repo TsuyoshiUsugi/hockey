@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace TsuyoshiLibrary
 {
+    /// <summary>
+    /// キーボードの入力を受け取るマネージャー
+    /// </summary>
     public class InputManager : MonoBehaviour
     {
         [SerializeField] Player _player1;
@@ -37,12 +40,18 @@ namespace TsuyoshiLibrary
 
             if (Input.GetKeyDown(KeyCode.U))
             {
-                _manager.ResetScore();
+                _manager.Reset();
+                
             }
 
             if (Input.GetKeyDown(KeyCode.I))
             {
                 _manager.GeneratePack();
+            }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                _manager.DestroyPack();
             }
         }
 

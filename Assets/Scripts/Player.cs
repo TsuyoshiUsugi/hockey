@@ -5,15 +5,24 @@ using UnityEngine;
 
 namespace TsuyoshiLibrary
 {
+    /// <summary>
+    /// playerのscript
+    /// 外から移動処理を呼び出すことで移動する
+    /// 後に直接位置を操作する予定
+    /// </summary>
     public class Player : MonoBehaviour
     {
-        [SerializeField] float _speed = 0.1f;
+        /// <summary>どちらのplayerのscriptか</summary>
         [SerializeField] OwnerPlayer _player;
+        [SerializeField] float _speed = 0.1f;
+
+        //上下左右のカベ。移動可能範囲を取るため使用
         [SerializeField] GameObject _split;
         [SerializeField] GameObject _top;
         [SerializeField] GameObject _down;
         [SerializeField] GameObject _goal;
-        float _offset = 1;
+
+        float _offset = 1;  //player(マレット)のサイズ
 
         private void Start()
         {
@@ -25,6 +34,9 @@ namespace TsuyoshiLibrary
             ClampPos();
         }
 
+        /// <summary>
+        /// playerがカベの外にでないようにする
+        /// </summary>
         private void ClampPos()
         {
             if (_player == OwnerPlayer.Player1)
@@ -43,11 +55,20 @@ namespace TsuyoshiLibrary
             transform.position = new Vector3(transform.position.x, transform.position.y, clampedZ);
         }
 
+        /// <summary>
+        /// 入力に応じてplayerの位置を操作する関数
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="h"></param>
         public void MovePos(float v, float h)
         {
             this.transform.position += new Vector3(h, 0, v) * _speed;
         }
 
+        /// <summary>
+        /// 直接playerを移動する関数
+        /// </summary>
+        /// <param name="pos"></param>
         public void SetPos(Vector3 pos)
         {
             this.transform.position = pos;
