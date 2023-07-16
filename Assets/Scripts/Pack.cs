@@ -32,7 +32,7 @@ namespace TsuyoshiLibrary
             if (collision.gameObject.GetComponent<Goal>())  //ゴールに着いたら中心へ瞬間移動
             {
                 transform.position = Vector3.zero;
-                _dir = GetRandomDirection();
+                _dir = GetRandomDirection().normalized;
             }
             else if (collision.gameObject.GetComponent<Player>() || collision.gameObject.GetComponent<Pack>())  //playerとpackにあたったら中心点の差分を進行方向に
             {
@@ -59,7 +59,7 @@ namespace TsuyoshiLibrary
             float randomAngle = Random.Range(0f, 360f);
             Vector3 randomDirection = Quaternion.Euler(0f, randomAngle, 0f) * Vector3.forward;
 
-            return randomDirection;
+            return randomDirection.normalized;
         }
     }
 }
