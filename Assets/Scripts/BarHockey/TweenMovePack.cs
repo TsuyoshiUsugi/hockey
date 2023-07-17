@@ -49,7 +49,15 @@ namespace TsuyoshiLibrary
         void RayCastToPoint()
         {
             _ray = new Ray(this.transform.position, _dir);
-            Physics.Raycast(_ray, out _hit);
+            var hits = Physics.RaycastAll(_ray);
+            if (hits.Length > 1)
+            {
+                _hit = hits[1];
+            }
+            else
+            {
+                _hit = hits[0];
+            }
         }
 
         void TweenMove(Vector3 point)
@@ -66,17 +74,19 @@ namespace TsuyoshiLibrary
 
         private void OnCollisionEnter(Collision collision)
         {
-            Debug.Log("hit");
-            if (collision.gameObject.GetComponent<Goal>())  //ゴールに着いたら中心へ瞬間移動
+            
+            if (collision.gameObject.tag == "Goal")  //ゴールに着いたら中心へ瞬間移動
             {
+                Debug.Log("Goal");
+                _currentTween.Kill();
                 transform.position = Vector3.zero;
                 _dir = GetRandomDirection();
                 RayCastToPoint();
                 TweenMove(_hit.point);
             }
-            else if (collision.gameObject.tag == "Player")  //playerとpackにあたったら中心点の差分を進行方向に
+            else if (collision.gameObject.tag == "Player")  //playerにあたったら中心点の差分を進行方向に
             {
-
+                Debug.Log("Player");
                 _dir = (transform.position - collision.gameObject.transform.position).normalized;
                 _dir.y = 0;
                 RayCastToPoint();
@@ -84,6 +94,7 @@ namespace TsuyoshiLibrary
             }
             else　//その他の物体(今の所カベのみ)にあたったら入射角と法線を計算して反射角を割り出す
             {
+                Debug.Log("Other");
                 var inDirection = _dir;
                 var inNormal = collision.contacts[0].normal;
                 float dot = Vector3.Dot(inDirection, inNormal);
