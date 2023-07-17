@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace TsuyoshiLibrary
 {
@@ -57,10 +58,12 @@ namespace TsuyoshiLibrary
             {
                 for (int i = 0; i < hits.Length; i++)   //PlayerとPackとBarオブジェクトを目標地点にしてしまうと途中でパックが止まってしまうので除外
                 {
-                    if (hits[i].transform.gameObject.tag != "Player" || hits[i].transform.gameObject.tag == "Pack" || hits[i].transform.gameObject.tag == "Bar")
-                    {
-                        _hit = hits[i];
-                    }
+                    if (hits[i].transform.gameObject.tag == "Player") continue;
+                    if (hits[i].transform.gameObject.tag == "Pack") continue;
+                    if (hits[i].transform.gameObject.tag == "Bar") continue;
+
+                    _hit = hits[i];
+
                 }
             }
             else
@@ -83,6 +86,8 @@ namespace TsuyoshiLibrary
         {
             StartCoroutine(nameof(WaitForFrames));
 
+
+
             if (_customEase)
             {
                 _currentTween = transform.DOMove(point, _moveDuration).SetEase(_curve);
@@ -93,7 +98,33 @@ namespace TsuyoshiLibrary
             }
             _targetPoint = point;
         }
-        
+
+        /// <summary>
+        /// Packが壁の外にでないようにする
+        /// </summary>
+        private void ClampPos()
+        {
+            if (_player == OwnerPlayer.Player1)
+            {
+                float clampedX = Mathf.Clamp(_mallet1.transform.position.x, _field.LeftGoal.transform.position.x + _offset, _field.Split.transform.position.x - _offset);
+                float clampedX2 = Mathf.Clamp(_mallet2.transform.position.x, _field.LeftGoal.transform.position.x + _offset, _field.Split.transform.position.x - _offset);
+                _mallet1.transform.position = new Vector3(clampedX, _mallet1.transform.position.y, _mallet1.transform.position.z);
+                _mallet2.transform.position = new Vector3(clampedX2, _mallet2.transform.position.y, _mallet2.transform.position.z);
+            }
+            else
+            {
+                float clampedX = Mathf.Clamp(_mallet1.transform.position.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
+                float clampedX2 = Mathf.Clamp(_mallet2.transform.position.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
+                _mallet1.transform.position = new Vector3(clampedX, _mallet1.transform.position.y, _mallet1.transform.position.z);
+                _mallet2.transform.position = new Vector3(clampedX2, _mallet2.transform.position.y, _mallet2.transform.position.z);
+            }
+
+            float clampedZ = Mathf.Clamp(_mallet1.transform.position.z, _field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
+            float clampedZ2 = Mathf.Clamp(_mallet2.transform.position.z, _field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
+            _mallet1.transform.position = new Vector3(_mallet1.transform.position.x, _mallet1.transform.position.y, clampedZ);
+            _mallet2.transform.position = new Vector3(_mallet2.transform.position.x, _mallet2.transform.position.y, clampedZ2);
+        }
+
         private void OnCollisionEnter(Collision collision)
         {
             if (_isInSkipFrame) return;
@@ -134,7 +165,7 @@ namespace TsuyoshiLibrary
             float randomAngle = Random.Range(0f, 360f);
             Vector3 randomDirection = Quaternion.Euler(0f, randomAngle, 0f) * Vector3.forward;
 
-            return new Vector3(randomDirection.x, 0f, randomDirection.z).normalized;
+            return new Vector3(randomDirection.x, 0, randomDirection.z).normalized;
         }
 
     }
