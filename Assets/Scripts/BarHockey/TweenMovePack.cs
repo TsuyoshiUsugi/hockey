@@ -15,11 +15,13 @@ namespace TsuyoshiLibrary
     /// </summary>
     public class TweenMovePack : MonoBehaviour
     {
+        [Header("設定値")]
         [SerializeField, Tooltip("移動にかかる時間")] float _moveDuration = 10; 
-        [SerializeField] Vector3 _dir = Vector3.zero;
-        [SerializeField] AnimationCurve _curve;
+        [SerializeField, Tooltip("独自に作成するイージング")] AnimationCurve _curve;
         [SerializeField] Ease _ease = Ease.InQuint;
         [SerializeField] bool _customEase = false;
+        [Header("確認用")]
+        [SerializeField] Vector3 _dir = Vector3.zero;
         [SerializeField] Vector3 _targetPoint = Vector3.zero;
         RaycastHit _hit;
         Tween _currentTween = null;
@@ -65,8 +67,6 @@ namespace TsuyoshiLibrary
             {
                 _hit = hits[0];
             }
-
-            
         }
 
         void TweenMove(Vector3 point)
