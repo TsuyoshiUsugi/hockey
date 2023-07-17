@@ -52,7 +52,13 @@ namespace TsuyoshiLibrary
             var hits = Physics.RaycastAll(_ray);
             if (hits.Length > 1)
             {
-                _hit = hits[1];
+                for (int i = 0; i < hits.Length; i++)   //PlayerとPackオブジェクトを目標地点にしてしまうと途中でパックが止まってしまうので除外
+                {
+                    if (hits[i].transform.gameObject.tag != "Player" || hits[i].transform.gameObject.tag == "Pack")
+                    {
+                        _hit = hits[i];
+                    }
+                }
             }
             else
             {
