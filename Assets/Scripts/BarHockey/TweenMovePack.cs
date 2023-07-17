@@ -65,6 +65,8 @@ namespace TsuyoshiLibrary
             {
                 _hit = hits[0];
             }
+
+            
         }
 
         void TweenMove(Vector3 point)
@@ -72,11 +74,13 @@ namespace TsuyoshiLibrary
             if (_customEase)
             {
                 _currentTween = transform.DOMove(point, _moveDuration).SetEase(_curve);
+                
             }
             else
             {
                 _currentTween = transform.DOMove(point, _moveDuration).SetEase(_ease);
             }
+            _targetPoint = point;
         }
 
         private void OnCollisionEnter(Collision collision)
