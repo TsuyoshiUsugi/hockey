@@ -14,14 +14,15 @@ namespace TsuyoshiLibrary
         [SerializeField] GameObject _bar;
         [SerializeField] float _speed = 10;
         [SerializeField] OwnerPlayer _player;
+        [SerializeField] float _offset = 1.1f;
+        [SerializeField] float _barLengthLimit = 10;
         FieldInfo _field;
-        float _offset = 1;
+        
 
 
         private void Start()
         {
             _field = FindAnyObjectByType<FieldInfo>();
-            _offset = transform.localScale.x;
         }
 
         private void Update()
@@ -30,6 +31,7 @@ namespace TsuyoshiLibrary
             ClampPos();
         }
 
+
         /// <summary>
         /// 一つ目のマレットの位置を移動する
         /// </summary>
@@ -37,7 +39,7 @@ namespace TsuyoshiLibrary
         /// <param name="h"></param>
         public void MoveMalletPosOne(float v, float h)
         {
-            _mallet1.transform.localPosition += new Vector3(v, 0, h) * _speed * Time.deltaTime;
+            _mallet1.transform.position += new Vector3(v, 0, h) * _speed * Time.deltaTime;
         }
         
         /// <summary>
@@ -47,7 +49,7 @@ namespace TsuyoshiLibrary
         /// <param name="h"></param>
         public void MoveMalletPosTwo(float v, float h)
         {
-            _mallet2.transform.localPosition += new Vector3(v, 0, h) * _speed * Time.deltaTime;
+            _mallet2.transform.position += new Vector3(v, 0, h) * _speed * Time.deltaTime;
         }
 
         /// <summary>
@@ -92,8 +94,8 @@ namespace TsuyoshiLibrary
             }
             else
             {
-                float clampedX = Mathf.Clamp(_mallet1.transform.localPosition.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
-                float clampedX2 = Mathf.Clamp(_mallet2.transform.position.x, _field.LeftGoal.transform.position.x + _offset, _field.Split.transform.position.x - _offset);
+                float clampedX = Mathf.Clamp(_mallet1.transform.position.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
+                float clampedX2 = Mathf.Clamp(_mallet2.transform.position.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
                 _mallet1.transform.position = new Vector3(clampedX, _mallet1.transform.position.y, _mallet1.transform.position.z);
                 _mallet2.transform.position = new Vector3(clampedX2, _mallet2.transform.position.y, _mallet2.transform.position.z);
             }
