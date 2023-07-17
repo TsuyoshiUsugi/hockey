@@ -20,6 +20,7 @@ namespace TsuyoshiLibrary
         [SerializeField] AnimationCurve _curve;
         [SerializeField] Ease _ease = Ease.InQuint;
         [SerializeField] bool _customEase = false;
+        [SerializeField] Vector3 _targetPoint = Vector3.zero;
         RaycastHit _hit;
         Tween _currentTween = null;
         Ray _ray;

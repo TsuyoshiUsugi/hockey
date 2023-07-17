@@ -34,6 +34,7 @@ namespace TsuyoshiLibrary
         private void Update()
         {
             GetPlayersInput();
+
             _player1Bar.MoveMalletPosOne(lv1, lh1);
             _player1Bar.MoveMalletPosTwo(rv1, rh1);
             _player2Bar.MoveMalletPosOne(lv2, lh2);
