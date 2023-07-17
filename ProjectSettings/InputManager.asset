@@ -177,9 +177,9 @@ InputManager:
     dead: 0.001
     sensitivity: 1000
     snap: 0
-    invert: 1
+    invert: 0
     type: 2
-    axis: 0
+    axis: 3
     joyNum: 2
   - serializedVersion: 3
     m_Name: Joystick2LeftHorizontal
@@ -193,10 +193,10 @@ InputManager:
     dead: 0.001
     sensitivity: 1000
     snap: 0
-    invert: 0
+    invert: 1
     type: 2
-    axis: 1
-    joyNum: 2
+    axis: 4
+    joyNum: 3
   - serializedVersion: 3
     m_Name: Joystick2RightVertical
     descriptiveName: 
@@ -211,8 +211,8 @@ InputManager:
     snap: 0
     invert: 0
     type: 2
-    axis: 2
-    joyNum: 2
+    axis: 0
+    joyNum: 3
   - serializedVersion: 3
     m_Name: Joystick2RightHorizontal
     descriptiveName: 
@@ -225,10 +225,10 @@ InputManager:
     dead: 0.001
     sensitivity: 1000
     snap: 0
-    invert: 0
+    invert: 1
     type: 2
-    axis: 3
-    joyNum: 2
+    axis: 1
+    joyNum: 3
   - serializedVersion: 3
     m_Name: Jump
     descriptiveName: 
