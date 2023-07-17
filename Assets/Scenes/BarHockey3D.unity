@@ -589,7 +589,7 @@ GameObject:
   - component: {fileID: 422764345}
   m_Layer: 0
   m_Name: Player1Bar
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1270,7 +1270,7 @@ GameObject:
   - component: {fileID: 1419653721}
   m_Layer: 0
   m_Name: Player1Mallet2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1808,7 +1808,7 @@ GameObject:
   - component: {fileID: 1994740145}
   m_Layer: 0
   m_Name: Player1Mallet1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1926,6 +1926,10 @@ PrefabInstance:
     - target: {fileID: 577593654812731353, guid: 21ccf737f79230b4893ecbd0b4954d6e, type: 3}
       propertyPath: m_Mass
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 577593654812731353, guid: 21ccf737f79230b4893ecbd0b4954d6e, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 577593654812731354, guid: 21ccf737f79230b4893ecbd0b4954d6e, type: 3}
       propertyPath: m_Name

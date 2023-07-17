@@ -49,7 +49,7 @@ namespace TsuyoshiLibrary
                 transform.position = Vector3.zero;
                 _dir = GetRandomDirection().normalized;
             }
-            else if (collision.gameObject.GetComponent<Player>() || collision.gameObject.GetComponent<Pack>())  //playerとpackにあたったら中心点の差分を進行方向に
+            else if (collision.gameObject.tag == "Player")  //playerとpackにあたったら中心点の差分を進行方向に
             {
                 _dir = (transform.position - collision.gameObject.transform.position).normalized;
                 _rb.velocity = _dir * _speed;
