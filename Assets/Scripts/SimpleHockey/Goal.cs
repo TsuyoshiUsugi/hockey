@@ -20,9 +20,7 @@ namespace TsuyoshiLibrary
 
         private void OnCollisionEnter(Collision collision)
         {
-            collision.gameObject.TryGetComponent(out Pack hockey);
-
-            if (hockey)
+            if (collision.gameObject.tag == "Pack")
             {
                 _manager.AddScore(_player);
             }

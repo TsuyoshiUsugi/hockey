@@ -17,11 +17,12 @@ namespace TsuyoshiLibrary
     public class TweenMovePack : MonoBehaviour
     {
         [Header("設定値")]
-        [SerializeField, Tooltip("移動にかかる時間")] float _moveDuration = 10; 
+        [SerializeField, Tooltip("移動にかかる時間の基準")] float _moveDuration = 10; 
         [SerializeField, Tooltip("独自のイージングを使うか")] bool _customEase = false;
         [SerializeField, Tooltip("独自に作成するイージング")] AnimationCurve _curve;
         [SerializeField, Tooltip("元からあるイージング")] Ease _ease = Ease.InQuint;
         [SerializeField, Tooltip("連続してHitした際に何フレームSkipするか")] float _skipFrame = 10; 
+        [SerializeField] float _offset = 1;
         [Header("確認用")]
         [SerializeField] Vector3 _dir = Vector3.zero;
         [SerializeField] Vector3 _targetPoint = Vector3.zero;
@@ -29,9 +30,11 @@ namespace TsuyoshiLibrary
         Tween _currentTween = null;
         Ray _ray;
         bool _isInSkipFrame = false;
+        FieldInfo _field;
 
         private void Start()
         {
+            _field = FindAnyObjectByType<FieldInfo>();
             _dir = GetRandomDirection();
             RayCastToPoint();
             TweenMove(_hit.point);
@@ -52,6 +55,7 @@ namespace TsuyoshiLibrary
 
         void RayCastToPoint()
         {
+            
             _ray = new Ray(this.transform.position, _dir);
             var hits = Physics.RaycastAll(_ray);
             if (hits.Length > 1)
@@ -86,43 +90,32 @@ namespace TsuyoshiLibrary
         {
             StartCoroutine(nameof(WaitForFrames));
 
+            point = ClampPos(point);
 
+           // var moveTime = Vector3.Magnitude(point - transform.position) / _moveDuration;
+            var moveTime = _moveDuration;
 
             if (_customEase)
             {
-                _currentTween = transform.DOMove(point, _moveDuration).SetEase(_curve);
+                _currentTween = transform.DOMove(point, moveTime).SetEase(_curve);
             }
             else
             {
-                _currentTween = transform.DOMove(point, _moveDuration).SetEase(_ease);
+                _currentTween = transform.DOMove(point, moveTime).SetEase(_ease);
             }
             _targetPoint = point;
         }
 
         /// <summary>
-        /// Packが壁の外にでないようにする
+        /// PackのTweenの終着点が壁の外にでないようにする
         /// </summary>
-        private void ClampPos()
+        private Vector3 ClampPos(Vector3 point)
         {
-            if (_player == OwnerPlayer.Player1)
-            {
-                float clampedX = Mathf.Clamp(_mallet1.transform.position.x, _field.LeftGoal.transform.position.x + _offset, _field.Split.transform.position.x - _offset);
-                float clampedX2 = Mathf.Clamp(_mallet2.transform.position.x, _field.LeftGoal.transform.position.x + _offset, _field.Split.transform.position.x - _offset);
-                _mallet1.transform.position = new Vector3(clampedX, _mallet1.transform.position.y, _mallet1.transform.position.z);
-                _mallet2.transform.position = new Vector3(clampedX2, _mallet2.transform.position.y, _mallet2.transform.position.z);
-            }
-            else
-            {
-                float clampedX = Mathf.Clamp(_mallet1.transform.position.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
-                float clampedX2 = Mathf.Clamp(_mallet2.transform.position.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
-                _mallet1.transform.position = new Vector3(clampedX, _mallet1.transform.position.y, _mallet1.transform.position.z);
-                _mallet2.transform.position = new Vector3(clampedX2, _mallet2.transform.position.y, _mallet2.transform.position.z);
-            }
 
-            float clampedZ = Mathf.Clamp(_mallet1.transform.position.z, _field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
-            float clampedZ2 = Mathf.Clamp(_mallet2.transform.position.z, _field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
-            _mallet1.transform.position = new Vector3(_mallet1.transform.position.x, _mallet1.transform.position.y, clampedZ);
-            _mallet2.transform.position = new Vector3(_mallet2.transform.position.x, _mallet2.transform.position.y, clampedZ2);
+            float clampedX = Mathf.Clamp(point.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
+            float clampedZ = Mathf.Clamp(point.z, _field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
+            return new Vector3(clampedX, point.y, clampedZ);
+
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -132,7 +125,8 @@ namespace TsuyoshiLibrary
             if (collision.gameObject.tag == "Goal")  //ゴールに着いたら中心へ瞬間移動
             {
                 _currentTween.Kill();
-                transform.position = Vector3.zero;
+                var randomPos = Random.Range(_field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
+                transform.position = new Vector3(0, 0, randomPos);
                 _dir = GetRandomDirection();
                 RayCastToPoint();
                 TweenMove(_hit.point);
@@ -144,7 +138,7 @@ namespace TsuyoshiLibrary
                 RayCastToPoint();
                 TweenMove(_hit.point);
             }
-            else　if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Bar")   //壁とプレイヤーのバーにあたったら法線を取得して反射角を割り出して跳ね返る
+            else　if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Bar" || collision.gameObject.tag == "Pack")   //壁とプレイヤーのバーもしくはパックにあたったら法線を取得して反射角を割り出して跳ね返る
             {
                 var inDirection = _dir;
                 var inNormal = collision.contacts[0].normal;
