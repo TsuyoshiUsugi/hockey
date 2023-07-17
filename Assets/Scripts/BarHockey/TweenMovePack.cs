@@ -33,7 +33,7 @@ namespace TsuyoshiLibrary
         {
             _dir = GetRandomDirection();
             RayCastToPoint();
-            TweenMove(_hit.transform.position);
+            TweenMove(_hit.point);
         }
 
         private void Update()
@@ -81,8 +81,6 @@ namespace TsuyoshiLibrary
 
         void TweenMove(Vector3 point)
         {
-            if (_isInSkipFrame) return;
-
             StartCoroutine(nameof(WaitForFrames));
 
             if (_customEase)
@@ -98,6 +96,7 @@ namespace TsuyoshiLibrary
         
         private void OnCollisionEnter(Collision collision)
         {
+            if (_isInSkipFrame) return;
             Debug.Log(collision.gameObject.tag);
             if (collision.gameObject.tag == "Goal")  //ÉSÅ[ÉãÇ…íÖÇ¢ÇΩÇÁíÜêSÇ÷èuä‘à⁄ìÆ
             {
