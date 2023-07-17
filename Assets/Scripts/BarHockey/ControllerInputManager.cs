@@ -18,10 +18,10 @@ namespace TsuyoshiLibrary
 
         private void Update()
         {
-            var lv = Input.GetAxisRaw(_p1LeftStickVerticalInputName);
-            var lh = Input.GetAxisRaw(_p1LeftStickHorizontalInputName);
-            var rv = Input.GetAxisRaw(_p1RightStickVerticalInputName);
-            var rh = Input.GetAxisRaw(_p1RightStickHorizontalInputName);
+            var lv = Input.GetAxis(_p1LeftStickVerticalInputName);
+            var lh = Input.GetAxis(_p1LeftStickHorizontalInputName);
+            var rv = Input.GetAxis(_p1RightStickVerticalInputName);
+            var rh = Input.GetAxis(_p1RightStickHorizontalInputName);
             _player1Bar.MoveMalletPosOne(lv, lh);
             _player1Bar.MoveMalletPosTwo(rv, rh);
         }
