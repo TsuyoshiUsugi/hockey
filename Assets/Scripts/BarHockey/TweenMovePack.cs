@@ -62,20 +62,14 @@ namespace TsuyoshiLibrary
         {
             _ray = new Ray(this.transform.position, _dir);
             var hits = Physics.RaycastAll(_ray);
-            if (hits.Length > 1)
-            {
-                for (int i = 0; i < hits.Length; i++)   //PlayerとPackとBarオブジェクトを目標地点にしてしまうと途中でパックが止まってしまうので除外
-                {
-                    if (hits[i].transform.gameObject.tag == "Player") continue;
-                    if (hits[i].transform.gameObject.tag == "Pack") continue;
-                    if (hits[i].transform.gameObject.tag == "Bar") continue;
 
-                    _hit = hits[i];
-                }
-            }
-            else
+            for (int i = 0; i < hits.Length; i++)   //PlayerとPackとBarオブジェクトを目標地点にしてしまうと途中でパックが止まってしまうので除外
             {
-                _hit = hits[0];
+                if (hits[i].transform.gameObject.tag == "Player") continue;
+                if (hits[i].transform.gameObject.tag == "Pack") continue;
+                if (hits[i].transform.gameObject.tag == "Bar") continue;
+
+                _hit = hits[i];
             }
         }
 
@@ -131,7 +125,7 @@ namespace TsuyoshiLibrary
             {
                 _currentTween.Kill();
                 var randomPos = Random.Range(_field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
-                transform.position = new Vector3(0, 0, randomPos);
+                transform.position = new Vector3(0, transform.position.y, randomPos);
                 _dir = GetRandomDirection();
                 RayCastToPoint();
                 TweenMove(_hit.point);

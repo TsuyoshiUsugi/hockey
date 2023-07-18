@@ -893,11 +893,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _ease: 0
+  _ease: 1
   _skipFrame: 10
   _offset: 1
   _dir: {x: 0, y: 0, z: 0}
   _targetPoint: {x: 0, y: 0, z: 0}
+  _isInSkipFrame: 0
   _prehitObj: {fileID: 0}
 --- !u!1 &873338404
 GameObject:
