@@ -1,0 +1,36 @@
+diff a/Assets/Scripts/BarHockey/TweenMovePack.cs b/Assets/Scripts/BarHockey/TweenMovePack.cs	(rejected hunks)
+@@ -66,30 +66,18 @@
+                 if (hits[i].transform.gameObject.tag == "Player") continue;
+                 if (hits[i].transform.gameObject.tag == "Pack") continue;
+                 if (hits[i].transform.gameObject.tag == "Bar") continue;
+-
+                 _hit = hits[i];
+             }
+         }
+ 
+-        private IEnumerator WaitForFrames()
+-        {
+-            _isInSkipFrame = true;
+-            for (int i = 0; i < _skipFrame; i++)
+-            {
+-                yield return null; // 1�t���[���ҋ@
+-            }
+-            _isInSkipFrame = false;
+-        }
+-
++        /// <summary>
++        /// Tween��p�����ړ���s��
++        /// </summary>
++        /// <param name="point"></param>
+         void TweenMove(Vector3 point)
+         {
+-            StartCoroutine(nameof(WaitForFrames));
+-
+             point = ClampPos(point);
+-
+             var moveTime = Vector3.Magnitude(point - transform.position) / _moveDuration;
+-            Debug.Log(moveTime);
+-            //var moveTime = _moveDuration;
+ 
+             if (_customEase)
+             {
