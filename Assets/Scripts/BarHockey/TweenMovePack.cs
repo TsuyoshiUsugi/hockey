@@ -116,8 +116,8 @@ namespace TsuyoshiLibrary
         private Vector3 ClampPos(Vector3 point)
         {
 
-            float clampedX = Mathf.Clamp(point.x, _field.LeftGoal.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
-            float clampedZ = Mathf.Clamp(point.z, _field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
+            float clampedX = Mathf.Clamp(point.x, _field.LeftGoal.transform.position.x - _offset, _field.RightGoal.transform.position.x + _offset);
+            float clampedZ = Mathf.Clamp(point.z, _field.Down.transform.position.z - _offset, _field.Top.transform.position.z + _offset);
             return new Vector3(clampedX, point.y, clampedZ);
 
         }
