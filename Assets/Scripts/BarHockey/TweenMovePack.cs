@@ -31,6 +31,7 @@ namespace TsuyoshiLibrary
         Ray _ray;
         bool _isInSkipFrame = false;
         FieldInfo _field;
+        [SerializeField] GameObject _prehitObj = null;
 
         private void Start()
         {
@@ -38,6 +39,7 @@ namespace TsuyoshiLibrary
             _dir = GetRandomDirection();
             RayCastToPoint();
             TweenMove(_hit.point);
+            _isInSkipFrame = false; //最初はスキップカウントしない
         }
 
         private void Update()
@@ -120,8 +122,9 @@ namespace TsuyoshiLibrary
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (_isInSkipFrame) return;
             Debug.Log(collision.gameObject.tag);
+            
+            
             if (collision.gameObject.tag == "Goal")  //ゴールに着いたら中心へ瞬間移動
             {
                 _currentTween.Kill();
@@ -133,21 +136,47 @@ namespace TsuyoshiLibrary
             }
             else if (collision.gameObject.tag == "Player")  //playerにあたったら中心点の差分を進行方向に
             {
+                Debug.Log(SkipCheck(collision.gameObject));
+                if (SkipCheck(collision.gameObject)) return;
                 _dir = (transform.position - collision.gameObject.transform.position).normalized;
                 _dir.y = 0;
                 RayCastToPoint();
                 TweenMove(_hit.point);
+                _prehitObj = collision.gameObject;
             }
             else　if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Bar" || collision.gameObject.tag == "Pack")   //壁とプレイヤーのバーもしくはパックにあたったら法線を取得して反射角を割り出して跳ね返る
             {
-                var inDirection = _dir;
-                var inNormal = collision.contacts[0].normal;
-                float dot = Vector3.Dot(inDirection, inNormal);
-                Vector3 reflection = inDirection - 2f * dot * inNormal;
-                _dir = new Vector3(reflection.x, 0, reflection.z);
+                Debug.Log(SkipCheck(collision.gameObject));
+                if (SkipCheck(collision.gameObject)) return;
+                CaluculateReflectionAngle(collision);
                 RayCastToPoint();
                 TweenMove(_hit.point);
+                _prehitObj = collision.gameObject;
             }
+        }
+
+        /// <summary>
+        /// 反射角を計算する
+        /// </summary>
+        /// <param name="collision"></param>
+        private void CaluculateReflectionAngle(Collision collision)
+        {
+            var inDirection = _dir;
+            var inNormal = collision.contacts[0].normal;
+            float dot = Vector3.Dot(inDirection, inNormal);
+            Vector3 reflection = inDirection - 2f * dot * inNormal;
+            _dir = new Vector3(reflection.x, 0, reflection.z);
+        }
+
+        /// <summary>
+        /// 当たり判定をスキップするかチェックする
+        /// </summary>
+        bool SkipCheck(GameObject hitObj)
+        {
+            if (!_isInSkipFrame) return false;      //スキップフレーム中じゃないならFalse
+            if (hitObj != _prehitObj) return false; //スキップフレーム中に当たったオブジェクトが同じオブジェクトじゃなかったらfalse
+            
+            return true;    //スキップフレーム中で当たったオブジェクトが前と同じならtrue
         }
 
         /// <summary>
