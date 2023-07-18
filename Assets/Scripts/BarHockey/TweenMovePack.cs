@@ -112,8 +112,10 @@ namespace TsuyoshiLibrary
 
         private void OnCollisionEnter(Collision collision)
         {
-            Debug.Log(collision.gameObject.tag);   
+            Debug.Log(collision.gameObject.tag);
+            StartCoroutine(nameof(WaitForFrames));
             
+
             if (collision.gameObject.tag == "Goal")  //ゴールに着いたら中心へ瞬間移動
             {
                 _currentTween.Kill();   //それまでのTweenをKill
@@ -125,6 +127,7 @@ namespace TsuyoshiLibrary
             }
             else if (collision.gameObject.tag == "Player")  //playerにあたったら中心点の差分を進行方向に
             {
+                _currentTween.Kill();   //それまでのTweenをKill
                 _dir = (transform.position - collision.gameObject.transform.position).normalized;
                 _dir.y = 0;
                 RayCastToPoint();
@@ -133,6 +136,7 @@ namespace TsuyoshiLibrary
             }
             else　if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Bar" || collision.gameObject.tag == "Pack")   //壁とプレイヤーのバーもしくはパックにあたったら法線を取得して反射角を割り出して跳ね返る
             {
+                _currentTween.Kill();   //それまでのTweenをKill
                 CaluculateReflectionAngle(collision);
                 RayCastToPoint();
                 TweenMove(_hit.point);
