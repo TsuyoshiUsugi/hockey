@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace TsuyoshiLibrary
 {
-    public class Setting : MonoBehaviour
+    public class MoveToNextScene : MonoBehaviour
     {
         public void MoveScene(string sceneName)
         {

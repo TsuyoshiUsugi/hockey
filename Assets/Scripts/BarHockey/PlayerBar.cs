@@ -18,8 +18,6 @@ namespace TsuyoshiLibrary
         [SerializeField] float _barLengthLimit = 10;
         FieldInfo _field;
         
-
-
         private void Start()
         {
             _field = FindAnyObjectByType<FieldInfo>();
@@ -30,7 +28,6 @@ namespace TsuyoshiLibrary
             SetBar();
             ClampPos();
         }
-
 
         /// <summary>
         /// 一つ目のマレットの位置を移動する
@@ -75,7 +72,7 @@ namespace TsuyoshiLibrary
         void SetBar()
         {
             _bar.transform.position = (_mallet1.transform.position + _mallet2.transform.position) / 2;  //二つのマレットの中心に位置を移動
-            _bar.transform.localScale = new Vector3(0.1f, 0.1f, Vector3.Distance(_mallet1.transform.position, _mallet2.transform.position));    //スケールを変えて長さを合わせる
+            _bar.transform.localScale = new Vector3(0.5f, 0.1f, Vector3.Distance(_mallet1.transform.position, _mallet2.transform.position));    //スケールを変えて長さを合わせる
             Vector3 direction = _mallet1.transform.position - _mallet2.transform.position;
             _bar.transform.rotation = Quaternion.LookRotation(direction);   //二点間のベクトルを出し、回転を適用
         }
@@ -85,25 +82,24 @@ namespace TsuyoshiLibrary
         /// </summary>
         private void ClampPos()
         {
+            float clampedX, clampedX2, clampedZ, clampedZ2;
+
             if (_player == OwnerPlayer.Player1)
             {
-                float clampedX = Mathf.Clamp(_mallet1.transform.position.x, _field.LeftGoal.transform.position.x + _offset, _field.Split.transform.position.x - _offset);
-                float clampedX2 = Mathf.Clamp(_mallet2.transform.position.x, _field.LeftGoal.transform.position.x + _offset, _field.Split.transform.position.x - _offset);
-                _mallet1.transform.position = new Vector3(clampedX, _mallet1.transform.position.y, _mallet1.transform.position.z);
-                _mallet2.transform.position = new Vector3(clampedX2, _mallet2.transform.position.y, _mallet2.transform.position.z);
+                clampedX = Mathf.Clamp(_mallet1.transform.position.x, _field.LeftGoal.transform.position.x + _offset, _field.Split.transform.position.x - _offset);
+                clampedX2 = Mathf.Clamp(_mallet2.transform.position.x, _field.LeftGoal.transform.position.x + _offset, _field.Split.transform.position.x - _offset);
             }
             else
             {
-                float clampedX = Mathf.Clamp(_mallet1.transform.position.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
-                float clampedX2 = Mathf.Clamp(_mallet2.transform.position.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
-                _mallet1.transform.position = new Vector3(clampedX, _mallet1.transform.position.y, _mallet1.transform.position.z);
-                _mallet2.transform.position = new Vector3(clampedX2, _mallet2.transform.position.y, _mallet2.transform.position.z);
+                clampedX = Mathf.Clamp(_mallet1.transform.position.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
+                clampedX2 = Mathf.Clamp(_mallet2.transform.position.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
             }
 
-            float clampedZ = Mathf.Clamp(_mallet1.transform.position.z, _field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
-            float clampedZ2 = Mathf.Clamp(_mallet2.transform.position.z, _field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
-            _mallet1.transform.position = new Vector3(_mallet1.transform.position.x, _mallet1.transform.position.y, clampedZ);
-            _mallet2.transform.position = new Vector3(_mallet2.transform.position.x, _mallet2.transform.position.y, clampedZ2);
+            clampedZ = Mathf.Clamp(_mallet1.transform.position.z, _field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
+            clampedZ2 = Mathf.Clamp(_mallet2.transform.position.z, _field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
+
+            _mallet1.transform.position = new Vector3(clampedX, _mallet1.transform.position.y, clampedZ);
+            _mallet2.transform.position = new Vector3(clampedX2, _mallet2.transform.position.y, clampedZ2);
         }
 
     }

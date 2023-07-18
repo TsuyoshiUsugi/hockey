@@ -23,7 +23,6 @@ namespace TsuyoshiLibrary
         [Header("確認用")]
         [SerializeField] Vector3 _dir = Vector3.zero;
         [SerializeField] Vector3 _targetPoint = Vector3.zero;
-        [SerializeField] bool _isInSkipFrame = false;
         [SerializeField] GameObject _prehitObj = null;
         Ray _ray;
         FieldInfo _field;
@@ -38,7 +37,6 @@ namespace TsuyoshiLibrary
             _dir = GetRandomDirection();
             RayCastToPoint();
             TweenMove(_hit.point);
-            _isInSkipFrame = false; //最初はスキップカウントしない
         }
 
         private void Update()
@@ -68,30 +66,18 @@ namespace TsuyoshiLibrary
                 if (hits[i].transform.gameObject.tag == "Player") continue;
                 if (hits[i].transform.gameObject.tag == "Pack") continue;
                 if (hits[i].transform.gameObject.tag == "Bar") continue;
-
                 _hit = hits[i];
             }
         }
 
-        private IEnumerator WaitForFrames()
-        {
-            _isInSkipFrame = true;
-            for (int i = 0; i < _skipFrame; i++)
-            {
-                yield return null; // 1フレーム待機
-            }
-            _isInSkipFrame = false;
-        }
-
+        /// <summary>
+        /// Tweenを用いた移動を行う
+        /// </summary>
+        /// <param name="point"></param>
         void TweenMove(Vector3 point)
         {
-            StartCoroutine(nameof(WaitForFrames));
-
             point = ClampPos(point);
-
             var moveTime = Vector3.Magnitude(point - transform.position) / _moveDuration;
-            Debug.Log(moveTime);
-            //var moveTime = _moveDuration;
 
             if (_customEase)
             {
@@ -109,17 +95,14 @@ namespace TsuyoshiLibrary
         /// </summary>
         private Vector3 ClampPos(Vector3 point)
         {
-
             float clampedX = Mathf.Clamp(point.x, _field.LeftGoal.transform.position.x - _offset, _field.RightGoal.transform.position.x + _offset);
             float clampedZ = Mathf.Clamp(point.z, _field.Down.transform.position.z - _offset, _field.Top.transform.position.z + _offset);
             return new Vector3(clampedX, point.y, clampedZ);
-
         }
 
         private void OnCollisionEnter(Collision collision)
         {
-            Debug.Log(collision.gameObject.tag);
-            
+            Debug.Log(collision.gameObject.tag);   
             
             if (collision.gameObject.tag == "Goal")  //ゴールに着いたら中心へ瞬間移動
             {
@@ -132,8 +115,6 @@ namespace TsuyoshiLibrary
             }
             else if (collision.gameObject.tag == "Player")  //playerにあたったら中心点の差分を進行方向に
             {
-                Debug.Log(SkipCheck(collision.gameObject));
-                if (SkipCheck(collision.gameObject)) return;
                 _dir = (transform.position - collision.gameObject.transform.position).normalized;
                 _dir.y = 0;
                 RayCastToPoint();
@@ -142,8 +123,6 @@ namespace TsuyoshiLibrary
             }
             else　if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Bar" || collision.gameObject.tag == "Pack")   //壁とプレイヤーのバーもしくはパックにあたったら法線を取得して反射角を割り出して跳ね返る
             {
-                Debug.Log(SkipCheck(collision.gameObject));
-                if (SkipCheck(collision.gameObject)) return;
                 CaluculateReflectionAngle(collision);
                 RayCastToPoint();
                 TweenMove(_hit.point);
@@ -162,17 +141,6 @@ namespace TsuyoshiLibrary
             float dot = Vector3.Dot(inDirection, inNormal);
             Vector3 reflection = inDirection - 2f * dot * inNormal;
             _dir = new Vector3(reflection.x, 0, reflection.z);
-        }
-
-        /// <summary>
-        /// 当たり判定をスキップするかチェックする
-        /// </summary>
-        bool SkipCheck(GameObject hitObj)
-        {
-            if (!_isInSkipFrame) return false;      //スキップフレーム中じゃないならFalse
-            if (hitObj != _prehitObj) return false; //スキップフレーム中に当たったオブジェクトが同じオブジェクトじゃなかったらfalse
-            
-            return true;    //スキップフレーム中で当たったオブジェクトが前と同じならtrue
         }
 
         /// <summary>
