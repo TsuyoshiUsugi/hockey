@@ -62,8 +62,8 @@ namespace TsuyoshiLibrary
         {
             _ray = new Ray(this.transform.position, _dir);
             var hits = Physics.RaycastAll(_ray);
-            if (hits.Length > 1)
-            {
+            //if (hits.Length > 1)
+            //{
                 for (int i = 0; i < hits.Length; i++)   //PlayerとPackとBarオブジェクトを目標地点にしてしまうと途中でパックが止まってしまうので除外
                 {
                     if (hits[i].transform.gameObject.tag == "Player") continue;
@@ -72,11 +72,11 @@ namespace TsuyoshiLibrary
 
                     _hit = hits[i];
                 }
-            }
-            else
-            {
-                _hit = hits[0];
-            }
+            //}
+            //else
+            //{
+            //    _hit = hits[0];
+            //}
         }
 
         private IEnumerator WaitForFrames()
@@ -116,8 +116,8 @@ namespace TsuyoshiLibrary
         private Vector3 ClampPos(Vector3 point)
         {
 
-            float clampedX = Mathf.Clamp(point.x, _field.LeftGoal.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
-            float clampedZ = Mathf.Clamp(point.z, _field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
+            float clampedX = Mathf.Clamp(point.x, _field.LeftGoal.transform.position.x - _offset, _field.RightGoal.transform.position.x + _offset);
+            float clampedZ = Mathf.Clamp(point.z, _field.Down.transform.position.z - _offset, _field.Top.transform.position.z + _offset);
             return new Vector3(clampedX, point.y, clampedZ);
 
         }
