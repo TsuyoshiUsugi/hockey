@@ -23,12 +23,12 @@ namespace TsuyoshiLibrary
         [Header("確認用")]
         [SerializeField] Vector3 _dir = Vector3.zero;
         [SerializeField] Vector3 _targetPoint = Vector3.zero;
+        [SerializeField] bool _isInSkipFrame = false;
+        [SerializeField] GameObject _prehitObj = null;
+        Ray _ray;
+        FieldInfo _field;
         RaycastHit _hit;
         Tween _currentTween = null;
-        Ray _ray;
-        bool _isInSkipFrame = false;
-        FieldInfo _field;
-        [SerializeField] GameObject _prehitObj = null;
 
         public float Speed { get => _moveDuration; set => _moveDuration = value; }
 
@@ -54,9 +54,12 @@ namespace TsuyoshiLibrary
             Debug.DrawRay(_ray.origin, _ray.direction * 100, Color.blue);
         }
 
+        /// <summary>
+        /// _dirを元にRayを放つ
+        /// 当たったオブジェクトを_hitに入れる
+        /// </summary>
         void RayCastToPoint()
         {
-            
             _ray = new Ray(this.transform.position, _dir);
             var hits = Physics.RaycastAll(_ray);
             if (hits.Length > 1)
@@ -68,7 +71,6 @@ namespace TsuyoshiLibrary
                     if (hits[i].transform.gameObject.tag == "Bar") continue;
 
                     _hit = hits[i];
-
                 }
             }
             else
