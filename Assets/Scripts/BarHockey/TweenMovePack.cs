@@ -95,6 +95,7 @@ namespace TsuyoshiLibrary
             point = ClampPos(point);
 
             var moveTime = Vector3.Magnitude(point - transform.position) / _moveDuration;
+            Debug.Log(moveTime);
             //var moveTime = _moveDuration;
 
             if (_customEase)

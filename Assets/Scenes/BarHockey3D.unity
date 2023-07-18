@@ -1458,7 +1458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6fa58e141e4cd241bb4cefc088108f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveDuration: 4
+  _moveDuration: 5
   _customEase: 0
   _curve:
     serializedVersion: 2
@@ -1498,6 +1498,7 @@ MonoBehaviour:
   _offset: 1
   _dir: {x: 0, y: 0, z: 0}
   _targetPoint: {x: 0, y: 0, z: 0}
+  _prehitObj: {fileID: 0}
 --- !u!1 &873338404
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,7 +1698,7 @@ GameObject:
   - component: {fileID: 1002673468}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
