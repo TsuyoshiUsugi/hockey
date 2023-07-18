@@ -92,8 +92,8 @@ namespace TsuyoshiLibrary
 
             point = ClampPos(point);
 
-           // var moveTime = Vector3.Magnitude(point - transform.position) / _moveDuration;
-            var moveTime = _moveDuration;
+            var moveTime = Vector3.Magnitude(point - transform.position) / _moveDuration;
+            //var moveTime = _moveDuration;
 
             if (_customEase)
             {
@@ -112,7 +112,7 @@ namespace TsuyoshiLibrary
         private Vector3 ClampPos(Vector3 point)
         {
 
-            float clampedX = Mathf.Clamp(point.x, _field.Split.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
+            float clampedX = Mathf.Clamp(point.x, _field.LeftGoal.transform.position.x + _offset, _field.RightGoal.transform.position.x - _offset);
             float clampedZ = Mathf.Clamp(point.z, _field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
             return new Vector3(clampedX, point.y, clampedZ);
 

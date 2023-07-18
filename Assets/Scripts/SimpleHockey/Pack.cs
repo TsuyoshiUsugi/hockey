@@ -20,6 +20,9 @@ namespace TsuyoshiLibrary
         {
             TryGetComponent(out _rb);
             _dir = GetRandomDirection();
+            _dir.y = 0;
+            _rb.velocity = _dir * _speed;
+
         }
 
         private void Update()
@@ -43,11 +46,13 @@ namespace TsuyoshiLibrary
             {
                 transform.position = Vector3.zero;
                 _dir = GetRandomDirection().normalized;
+                _dir.y = 0;
                 _rb.velocity = _dir * _speed;
             }
             else if (collision.gameObject.tag == "Player")  //playerとpackにあたったら中心点の差分を進行方向に
             {
                 _dir = (transform.position - collision.gameObject.transform.position).normalized;
+                _dir.y = 0;
                 _rb.velocity = _dir * _speed;
             }
             else　//その他の物体(今の所カベのみ)にあたったら入射角と法線を計算して反射角を割り出す
@@ -57,6 +62,7 @@ namespace TsuyoshiLibrary
                 float dot = Vector3.Dot(inDirection, inNormal);
                 Vector3 reflection = inDirection - 2f * dot * inNormal;
                 _dir = reflection.normalized;
+                _dir.y = 0;
                 _rb.velocity = _dir * _speed;
             }
         }
