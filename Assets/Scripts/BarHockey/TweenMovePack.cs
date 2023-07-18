@@ -33,6 +33,8 @@ namespace TsuyoshiLibrary
         FieldInfo _field;
         [SerializeField] GameObject _prehitObj = null;
 
+        public float Speed { get => _moveDuration; set => _moveDuration = value; }
+
         private void Start()
         {
             _field = FindAnyObjectByType<FieldInfo>();

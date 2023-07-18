@@ -14,6 +14,8 @@ namespace TsuyoshiLibrary
         [SerializeField] int _p2Score = 0;
         [SerializeField] Text _scoreText = null;
         [SerializeField] Text _packNumText = null;
+        [SerializeField] Text _packSpeedText = null;
+        [SerializeField] Text _playerSpeedText = null;
         [SerializeField] GameObject _pack;
         List<GameObject> _packs = new List<GameObject>();
         FieldInfo _fieldInfo;
@@ -51,6 +53,8 @@ namespace TsuyoshiLibrary
         {
             _scoreText.text = $"{_p1Score}:{_p2Score}";
             _packNumText.text = $"パック数：{_packs.Count + 1}";     //元から一つあるので+1
+            _packSpeedText.text = $"パック速度：{_pack.GetComponent<TweenMovePack>().Speed}";
+            //_playerSpeedText.text = $"プレイヤー速度：{_pack.GetComponent<TweenMovePack>().Speed}";
         }
 
         /// <summary>
@@ -91,6 +95,24 @@ namespace TsuyoshiLibrary
             if (_packs.Count == 0) return;
             Destroy(_packs[0]);
             _packs.RemoveAt(0);
+        }
+
+        public void UPPackSpeed()
+        {
+            _pack.GetComponent<TweenMovePack>().Speed++;
+            _packs.ForEach(pack => pack.GetComponent<TweenMovePack>().Speed++);
+        }
+
+        public void DownPackSpeed()
+        {
+            if (_pack.GetComponent<TweenMovePack>().Speed == 0) return;
+            _pack.GetComponent<TweenMovePack>().Speed--;
+            _packs.ForEach(pack => pack.GetComponent<TweenMovePack>().Speed--);
+        }
+
+        public void UpPlayerSpeed()
+        {
+
         }
     }
 }

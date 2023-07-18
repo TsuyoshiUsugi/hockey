@@ -65,6 +65,10 @@ namespace TsuyoshiLibrary
             if (Input.GetKeyDown(KeyCode.Y)) _manager.ResetPack();
             if (Input.GetKeyDown(KeyCode.I)) _manager.GeneratePack();
             if (Input.GetKeyDown(KeyCode.O)) _manager.DestroyPack();
+            if (Input.GetKeyDown(KeyCode.G)) _manager.UPPackSpeed();
+            if (Input.GetKeyDown(KeyCode.H)) _manager.DownPackSpeed();
+            if (Input.GetKeyDown(KeyCode.J)) _manager.DownPackSpeed();
+            if (Input.GetKeyDown(KeyCode.K)) _manager.DownPackSpeed();
         }
     }
 }
