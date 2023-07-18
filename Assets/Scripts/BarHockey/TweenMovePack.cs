@@ -21,6 +21,7 @@ namespace TsuyoshiLibrary
         [SerializeField, Tooltip("連続してHitした際に何フレームSkipするか")] float _skipFrame = 10; 
         [SerializeField] float _offset = 1;
         [Header("確認用")]
+        [SerializeField] bool _isInSkipFrame = false;
         [SerializeField] Vector3 _dir = Vector3.zero;
         [SerializeField] Vector3 _targetPoint = Vector3.zero;
         [SerializeField] GameObject _prehitObj = null;
@@ -70,6 +71,15 @@ namespace TsuyoshiLibrary
             }
         }
 
+        private IEnumerator WaitForFrames()
+        {
+            _isInSkipFrame = true;
+            for (int i = 0; i < _skipFrame; i++)
+            {
+                yield return null; 
+            }
+            _isInSkipFrame = false;
+        }
         /// <summary>
         /// Tweenを用いた移動を行う
         /// </summary>
