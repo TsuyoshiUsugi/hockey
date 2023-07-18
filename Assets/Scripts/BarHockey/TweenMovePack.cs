@@ -106,12 +106,12 @@ namespace TsuyoshiLibrary
             
             if (collision.gameObject.tag == "Goal")  //ゴールに着いたら中心へ瞬間移動
             {
-                _currentTween.Kill();
-                var randomPos = Random.Range(_field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);
-                transform.position = new Vector3(0, transform.position.y, randomPos);
-                _dir = GetRandomDirection();
-                RayCastToPoint();
-                TweenMove(_hit.point);
+                _currentTween.Kill();   //それまでのTweenをKill
+                var randomPos = Random.Range(_field.Down.transform.position.z + _offset, _field.Top.transform.position.z - _offset);    
+                transform.position = new Vector3(0, transform.position.y, randomPos);   //中心の縦にランダムな位置に移動
+                _dir = GetRandomDirection();    //ランダムに移動する方向を算出
+                RayCastToPoint();   //自身の位置から_dirに向かってRayを放つ
+                TweenMove(_hit.point);  //Rayの当たった場所にTween
             }
             else if (collision.gameObject.tag == "Player")  //playerにあたったら中心点の差分を進行方向に
             {
